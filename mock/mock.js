@@ -1,47 +1,51 @@
 const mockData = {
-    "shop.getShopList":{
-        code:"0",
-        message:"请求成功",
-        shopList:[
+    "shop.getShopList": {
+        "statusCode": "000000",
+        "desc": "请求成功",
+        "result": {
+            "area": "广州",//地区名称
+            "areaid": "101280101", //地区ID
+            "dayList": [
+                {
+                    "area": "广州",//地区名称
+                    "areaid": "101280101",//地区ID
+                    "day_air_temperature": "32", //日平均温度
+                    "day_weather": "雷阵雨",//天气状况
+                    "day_weather_code": "04",//天气状况编码
+                    "day_weather_pic": "http://app1.showapi.com/weather/icon/day/04.png", //天气状况示例图片
+                    "day_wind_direction": "无持续风向",//风向
+                    "day_wind_power": "微风",//风力
+                    "daytime": "20170712",//日期
+                    "night_air_temperature": "26",//晚间温度
+                    "night_weather": "雷阵雨",//晚间天气状况
+                    "night_weather_code": "04", //晚间天气状态编码
+                    "night_weather_pic": "http://app1.showapi.com/weather/icon/night/04.png",//晚间天气状况示例图
+                    "night_wind_direction": "无持续风向"//晚间风向
+                }
+            ],
+            "ret_code": 0
+        }
+    },
+    "searchDreamDetail": {
+        "statusCode": "000000",
+        "desc": "请求成功",
+        "result": [
             {
-                id:'001',
-                price:10000,
-                number:311,
-                name:"风衣",
-                goodUrl:"https://assets.burberry.com/is/image/Burberryltd/488D5794-C6D0-4954-8E7C-30E2AD167B4B.jpg?$BBY_V2_ML_1x1$&wid=887&hei=887"
-            },{
-                id:'002',
-                price:20000,
-                number:11,
-                name:"风衣",
-                goodUrl:"https://assets.burberry.com/is/image/Burberryltd/488D5794-C6D0-4954-8E7C-30E2AD167B4B.jpg?$BBY_V2_ML_1x1$&wid=887&hei=887"
-            },{
-                id:'003',
-                price:103400,
-                number:0,
-                name:"风衣",
-                goodUrl:"https://assets.burberry.com/is/image/Burberryltd/488D5794-C6D0-4954-8E7C-30E2AD167B4B.jpg?$BBY_V2_ML_1x1$&wid=887&hei=887"
-            },{
-                id:'004',
-                price:100,
-                number:66,
-                name:"风衣",
-                goodUrl:"https://assets.burberry.com/is/image/Burberryltd/488D5794-C6D0-4954-8E7C-30E2AD167B4B.jpg?$BBY_V2_ML_1x1$&wid=887&hei=887"
-            },{
-                id:'005',
-                price:4320,
-                number:32,
-                name:"风衣",
-                goodUrl:"https://assets.burberry.com/is/image/Burberryltd/488D5794-C6D0-4954-8E7C-30E2AD167B4B.jpg?$BBY_V2_ML_1x1$&wid=887&hei=887"
+                "content": "梦见猫产仔，吉兆，会有好运气。 求职者梦见猫生小猫，求职运势一般，合适的机会较少，观望的时候较多，会理性地调整自己的求职方向。投资人梦见猫生小猫，说明您的财运一般，波动较大，得失参半。正财方面想要收获需要付出更多的汗水与精力。投资有机会，但不必急着收获，一些长远性的投资对你更有利。生活中你有点大手大脚，要注意少带钱财出门。梦见猫生小猫，会有小状况发生，要心平气和的去处理问题。未婚的人梦见猫生小猫，则恋情起伏不定。虽然桃花盛开，但是要小心分辨好桃花和烂桃花，已婚的尤其要小心染上绯闻。您往往会被情绪化或有个性的异性吸引。女人梦见猫生小猫，则表示最近做事干净利落，不拖泥带水。女性梦见猫生小猫，一般是内心对于少年时期愿望的未达成抱有焦虑，所以会做生猫的梦。女性梦见猫生小猫时小猫死了，则表示你当前很在意一些事情，压力过大，无形的影响了你。",//内容
+                "title": "梦见猫生小猫"//标题
+            },
+            {
+                "class": "在猫和老鼠的梦境里，猫代表着正义的力量，老鼠代表着小人或者困难，猫捉住老鼠表明你将得到朋友的帮助，克服困难，在事业或生活上取得成功。梦见猫在抓老鼠，表示你有可能会遇上小偷。外出时要特别小心扒手和抢劫，自行车也不要忘了上锁。另外要特别注意友情，只要互相帮助，大家组织一些活动，日子就能过得很快活。梦见抓老鼠，表示会交上不诚实的朋友。梦见猫捉老鼠，表示能赚进大笔钱财。外出的人梦见猫捉老鼠，可能很难回到家里了。梦见猫捉老鼠，是祥兆，敌人会互相残杀，两者俱亡。 梦见捕老鼠，敌人已经阴谋着要暗算自己，要做好防御的工作。原版周公解梦猫捉鼠，主进大财。《周公解梦》猫捕鼠者，主得财。《周公解梦》梦猫捕鼠。此梦主得财，须防子孙灾。若有姓褚者梦此，则为苦哀之象。 《梦林玄解》梦猫捕鼠。梦此主得财。须防子媳有灾。出行人梦之，有不得归之叹。 《断梦秘书》",//内容
+                "title": "梦见猫捉老鼠"//标题
             }
         ]
     }
 }
 
-export default  (key)=>{
-    return new Promise(res=>{
-        setTimeout(()=>{
+export default (key) => {
+    return new Promise(res => {
+        setTimeout(() => {
             res(mockData[key])
-        },1000);
+        }, 1000);
     })
 }

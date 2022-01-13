@@ -36,12 +36,21 @@ export default defineConfig({
     }),
   ],
   server: {
+    // 是否自动打开浏览器
+    open: true,
     host: "localhost",
     port: "9090",
+    // 设为 true ,若端口已被占用则会直接退出，而不是尝试下一个可用端口
+    strictPort: false,
+    // 为开发服务器配置 CORS
+    cors: true,
+    // 设置为 true 强制使依赖预构建
+    force: true,
+    //代理
     proxy: {
-      "/api": {
+      "/common": {
         target: "https://api.apishop.net", // 所要代理的目标地址
-        rewrite: (path) => path.replace(/^\/api/, ""), // 重写传过来的path路径，
+        rewrite: (path) => path.replace(/^\/api/, "/common"), // 重写传过来的path路径，
         changeOrigin: true,
       },
     },
