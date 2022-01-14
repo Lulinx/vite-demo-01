@@ -108,11 +108,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-// body {
-//     font-size: 16px;
-//     background-color: #f8f8f8;
-//     -webkit-font-smoothing: antialiased;
-// }
 .page-shop-detail {
   .goods {
     padding-bottom: 100px;
