@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import styleImport from "vite-plugin-style-import";
 import postCssPxToRem from "postcss-pxtorem";
+import ViteComponents, { ElementPlusResolver } from 'vite-plugin-components'
 import path from 'path';
 
 // https://vitejs.dev/config/
@@ -16,9 +17,9 @@ export default defineConfig({
   define: {},
   resolve: {
     alias: {
-      "root":  path.resolve(__dirname, ""),
-      "@":  path.resolve(__dirname, "src"),
-      "v":  path.resolve(__dirname, "src/components"),
+      "root": path.resolve(__dirname, ""),
+      "@": path.resolve(__dirname, "src"),
+      "v": path.resolve(__dirname, "src/components"),
     },
     dedupe: [],
     // 情景导出package.json 配置中的 exports 字段
@@ -68,18 +69,30 @@ export default defineConfig({
             return file.indexOf("vant") !== -1 ? 37.5 : 75;
           }, // 1rem的大小
           propList: ["*"], // 需要转换的属性，这里选择全部都进行转换
+          selectorBlackList: [".el",".icon","svg"]// 匹配不被转换为rem的选择器
         }),
       ],
     },
   },
   plugins: [
     vue(),
+    //按需导入element-plus组件
+    ViteComponents({
+      customComponentResolvers: [ElementPlusResolver()],
+    }),
     styleImport({
       libs: [
         {
           libraryName: "vant",
           esModule: true,
           resolveStyle: (name) => `vant/es/${name}/style`,
+        },
+        {
+          libraryName: 'element-plus',
+          esModule: true,
+          resolveStyle: name => {
+            return `element-plus/lib/theme-chalk/${name}.css`
+          },
         },
       ],
     }),
@@ -102,6 +115,7 @@ export default defineConfig({
       input: {
         admin: path.resolve(__dirname, 'src/index.html'),
         shop: path.resolve(__dirname, 'src/shop/index.html'),
+        home: path.resolve(__dirname, 'src/home/index.html'),
       },
       output: {
         chunkFileNames: 'static/js/[name]-[hash].js',
