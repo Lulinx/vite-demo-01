@@ -8,8 +8,7 @@
         </van-collapse-item>
       </van-collapse>
       <div class="btn">
-
-      <van-button @click.stop="goToShop()" type="primary">下一步</van-button>
+        <van-button @click.stop="goToShop()" type="primary">下一步</van-button>
       </div>
     </div>
   </div>
@@ -81,9 +80,9 @@ export default {
     text-align: center;
     padding-top: 30px;
   }
-  .btn{
+  .btn {
     padding: 20px 30px;
-    .van-button{
+    .van-button {
       width: 100%;
       border-radius: 50px 50px;
     }
