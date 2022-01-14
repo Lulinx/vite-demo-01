@@ -3,12 +3,12 @@ import mockData from "root/mock/mock";
 const Mock = true;
 const baseUrl =
   process.env.NODE_ENV === "production" ? "https://api.apishop.net" : "";
-// 天气预报
-export const getShopList = (data = {}, callback = "") =>
+// 狗狗大全
+export const dogFamily = (data = {}, callback = "") =>
   Mock
-    ? mockData("shop.getShopList")
+    ? mockData("dogFamily")
     : request.post(
-      `${baseUrl}/common/weather/get15DaysWeatherByArea`,
+      `${baseUrl}/common/dogFamily/queryDogListByKeyword`,
       data,
       callback
     );

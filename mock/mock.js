@@ -1,29 +1,10 @@
 const mockData = {
-    "shop.getShopList": {
+    "dogFamily": {
         "statusCode": "000000",
         "desc": "请求成功",
         "result": {
-            "area": "广州",//地区名称
-            "areaid": "101280101", //地区ID
-            "dayList": [
-                {
-                    "area": "广州",//地区名称
-                    "areaid": "101280101",//地区ID
-                    "day_air_temperature": "32", //日平均温度
-                    "day_weather": "雷阵雨",//天气状况
-                    "day_weather_code": "04",//天气状况编码
-                    "day_weather_pic": "http://app1.showapi.com/weather/icon/day/04.png", //天气状况示例图片
-                    "day_wind_direction": "无持续风向",//风向
-                    "day_wind_power": "微风",//风力
-                    "daytime": "20170712",//日期
-                    "night_air_temperature": "26",//晚间温度
-                    "night_weather": "雷阵雨",//晚间天气状况
-                    "night_weather_code": "04", //晚间天气状态编码
-                    "night_weather_pic": "http://app1.showapi.com/weather/icon/night/04.png",//晚间天气状况示例图
-                    "night_wind_direction": "无持续风向"//晚间风向
-                }
-            ],
-            "ret_code": 0
+            "petFamilyList": [{ "petID": 1, "name": "法老王猎犬", "engName": "Pharaoh Hound", "price": "", "coverURL": "http://img.boqiicdn.com/Data/BK/P/img5701405934288.jpg" }, { "petID": 2, "name": "比熊犬", "engName": "Bichon Frise", "price": "1000-3000元", "coverURL": "http://img.boqiicdn.com/Data/BK/P/imagick22281435572067.png" }, { "petID": 3, "name": "拉布拉多猎犬", "engName": "Labrador", "price": "1000-3000元", "coverURL": "http://img.boqiicdn.com/Data/BK/P/imagick12541435573782.png" }, { "petID": 4, "name": "阿拉斯加雪橇犬", "engName": "Alaskan Malamute", "price": "3000起", "coverURL": "http://img.boqiicdn.com/Data/BK/P/img50961416195246.jpg" }, { "petID": 5, "name": "博美犬", "engName": "Pomeranian", "price": "1000-3000元", "coverURL": "http://img.boqiicdn.com/Data/BK/P/imagick53831435572176.png" }, { "petID": 6, "name": "哈士奇", "engName": "Siberian Huskiy", "price": "2000-4000元", "coverURL": "http://img.boqiicdn.com/Data/BK/P/imagick14371435571930.png" }, { "petID": 7, "name": "罗威纳犬", "engName": "Rottweiler", "price": "3500左右", "coverURL": "http://img.boqiicdn.com/Data/BK/P/img92461407811854.jpg" }, { "petID": 8, "name": "金毛犬", "engName": "Golden Retriever", "price": "800-3000元", "coverURL": "http://img.boqiicdn.com/Data/BK/P/imagick83771435571788.png" }, { "petID": 9, "name": "藏獒", "engName": "Canis lupus familiaris", "price": "500-50000元不等", "coverURL": "http://img.boqiicdn.com/Data/BK/P/img89221407815357.jpg" }, { "petID": 10, "name": "英国斗牛犬", "engName": "Bulldog", "price": "", "coverURL": "http://img.boqiicdn.com/Data/BK/P/img30671406195314.jpg" }, { "petID": 11, "name": "惠比特犬", "engName": "Whippet", "price": "3000左右", "coverURL": "http://img.boqiicdn.com/Data/BK/P/img10301406279607.jpg" }, { "petID": 12, "name": "秋田犬", "engName": "Japanese Akita", "price": "", "coverURL": "http://img.boqiicdn.com/Data/BK/P/img90061406622680.jpg" }, { "petID": 13, "name": "西施犬", "engName": "Shih Tzu", "price": "", "coverURL": "http://img.boqiicdn.com/Data/BK/P/img82341406534748.jpg" }, { "petID": 14, "name": "雪纳瑞", "engName": "Schnauzer", "price": "1500起", "coverURL": "http://img.boqiicdn.com/Data/BK/P/imagick2311435657437.png" }, { "petID": 15, "name": "伯恩山犬", "engName": "BerneseMountain", "price": "", "coverURL": "http://img.boqiicdn.com/Data/BK/P/img50161407393634.jpg" }, { "petID": 16, "name": "伯瑞犬", "engName": "Briard", "price": "", "coverURL": "http://img.boqiicdn.com/Data/BK/P/img99471407393013.jpg" }, { "petID": 17, "name": "比特犬", "engName": "", "price": "", "coverURL": "http://img.boqiicdn.com/Data/BK/P/imagick76951500863293.jpg" }, { "petID": 18, "name": "串串", "engName": "", "price": "", "coverURL": "http://img.boqiicdn.com/Data/BK/P/imagick70981491560372.jpg" }, { "petID": 19, "name": "阿根廷杜高犬", "engName": "", "price": "", "coverURL": "http://img.boqiicdn.com/Data/BK/P/imagick92711480484715.jpg" }, { "petID": 20, "name": "高加索犬", "engName": "", "price": "", "coverURL": "http://img.boqiicdn.com/Data/BK/P/imagick58081481766550.jpg" }, { "petID": 21, "name": "奥达猎犬", "engName": "Otterhound", "price": "", "coverURL": "http://img.boqiicdn.com/Data/BK/P/img60371407461398.jpg" }, { "petID": 22, "name": "中华田园犬", "engName": "", "price": "", "coverURL": "http://img.boqiicdn.com/Data/BK/P/imagick62021473240207.jpg" }, { "petID": 23, "name": "斯开岛梗", "engName": "SkyeTerrier", "price": "", "coverURL": "http://img.boqiicdn.com/Data/BK/P/img39481407230587.jpg" }, { "petID": 24, "name": "卷毛寻回猎犬", "engName": "Curly-CoatedRetriever", "price": "", "coverURL": "http://img.boqiicdn.com/Data/BK/P/img22671407405102.jpg" }, { "petID": 25, "name": "克伦伯猎鹬犬", "engName": "ClumberSpaniel", "price": "", "coverURL": "http://img.boqiicdn.com/Data/BK/P/img45811406628222.jpg" }, { "petID": 26, "name": "史毕诺犬", "engName": "Spinone Italiano", "price": "", "coverURL": "http://img.boqiicdn.com/Data/BK/P/img66101411550227.jpg" }, { "petID": 27, "name": "凯安梗", "engName": "Cairn Terrier", "price": "1000—5000元", "coverURL": "http://img.boqiicdn.com/Data/BK/P/img30391406624704.jpg" }, { "petID": 28, "name": "恩特雷布赫山地犬", "engName": "Entlebucher", "price": "", "coverURL": "http://img.boqiicdn.com/Data/BK/P/img39531406710923.jpg" }, { "petID": 29, "name": "乞沙比克猎犬", "engName": "ChesapeakeBayRetriever", "price": "", "coverURL": "http://img.boqiicdn.com/Data/BK/P/img98301407146089.jpg" }, { "petID": 30, "name": "英国雪达犬", "engName": "English Setter", "price": "", "coverURL": "http://img.boqiicdn.com/Data/BK/P/img35421407216285.jpg" }],
+            "totalCount": 141
         }
     },
     "searchDreamDetail": {

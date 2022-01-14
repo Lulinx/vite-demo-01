@@ -20,7 +20,7 @@ import { onMounted, reactive, toRefs } from "@vue/runtime-core";
 import { useRouter } from "vue-router";
 import { Cell, List, Collapse, CollapseItem, Loading, Button } from "vant";
 import { getCurrentInstance } from "vue";
-import { getShopList, searchDreamDetail } from "@/api/api";
+import { searchDreamDetail } from "@/api/api";
 export default {
   name: "home",
   components: {
@@ -45,9 +45,9 @@ export default {
         area: "武汉",
         apiKey: "MLi5N8Fa82d8c4c876569aa09698ad23b9610cffaf62972",
       })
-        .then(async (res) => {
+        .then((res) => {
           if (res.statusCode == "000000") {
-            data.list = await res.result[0];
+            data.list = res.result[0];
             data.loading = false;
             console.log("list.value====", data.list);
           }
