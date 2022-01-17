@@ -1,3 +1,11 @@
+/*
+ * @Author: ws
+ * @Date: 2022-01-14 08:52:47
+ * @LastEditTime: 2022-01-17 14:30:04
+ * @LastEditors: ws
+ * @Description: 
+ * @FilePath: \myDemo\vite-demo-01\request\index.js
+ */
 import axios from 'axios';
 // 引入公共函数js文件
 import { showToast } from "@/utils/extend.js";
