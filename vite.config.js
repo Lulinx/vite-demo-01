@@ -2,10 +2,7 @@ import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import styleImport from "vite-plugin-style-import";
 import postCssPxToRem from "postcss-pxtorem";
-import ViteComponents, { ElementPlusResolver } from 'vite-plugin-components'
 import path from 'path';
-//控制是app端还是PC端开发，为了适配app端的rem自适应size，elementUI中的全局样式变量在预构建的过程中就被转成了rem，会影响部分全局样式
-const isApp = true;
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -66,35 +63,23 @@ export default defineConfig({
   css: {
     postcss: {
       plugins: [
-        isApp?postCssPxToRem({
+        postCssPxToRem({
           rootValue({ file }) {
             return file.indexOf("vant") !== -1 ? 37.5 : 75;
           }, // 1rem的大小
           propList: ["*"], // 需要转换的属性，这里选择全部都进行转换
-          selectorBlackList: [".el"]// 匹配不被转换为rem的选择器,过滤element
-        }):()=>{},
+        })
       ],
     },
   },
   plugins: [
     vue(),
-    //按需导入element-plus组件
-    ViteComponents({
-      customComponentResolvers: [ElementPlusResolver()],
-    }),
     styleImport({
       libs: [
         {
           libraryName: "vant",
           esModule: true,
           resolveStyle: (name) => `vant/es/${name}/style`,
-        },
-        {
-          libraryName: 'element-plus',
-          esModule: true,
-          resolveStyle: name => {
-            return `element-plus/lib/theme-chalk/${name}.css`
-          },
         },
       ],
     }),
