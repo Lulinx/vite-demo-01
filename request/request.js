@@ -23,7 +23,7 @@ const request =
                     params: params
                 })
                 .then(res => {
-                    callback ? resolve(callback(res.data)) : resolve(res.data);
+                    callback ? resolve(callback(res)) : resolve(res);
                 })
                 .catch(err => {
                     reject(err);
@@ -44,12 +44,12 @@ const request =
     post(url, params, callback) {
         return new Promise((resolve, reject) => {
             axios
-                .post(url, qs.stringify(params))
+                .post(url, params)
                 .then(res => {
-                    callback ? resolve(callback(res.data)) : resolve(res.data);
+                    callback ? resolve(callback(res)) : resolve(res);
                 })
                 .catch(err => {
-                    reject(err.data);
+                    reject(err);
                 });
         });
     },

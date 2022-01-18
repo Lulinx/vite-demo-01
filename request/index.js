@@ -1,10 +1,10 @@
 /*
  * @Author: ws
  * @Date: 2022-01-14 08:52:47
- * @LastEditTime: 2022-01-17 14:30:04
+ * @LastEditTime: 2022-01-18 15:40:00
  * @LastEditors: ws
  * @Description: 
- * @FilePath: \myDemo\vite-demo-01\request\index.js
+ * @FilePath: \vite-demo-01\request\index.js
  */
 import axios from 'axios';
 // 引入公共函数js文件
@@ -36,8 +36,12 @@ axios.interceptors.request.use(
 // 响应拦截
 axios.interceptors.response.use((result) => {
   if (result.status === 200) {
-    if (result.data.result && result.data.statusCode == "000000") {
-      return Promise.resolve(result);
+    if (result.data !== undefined) {
+      let data = {
+        data: result.data,
+        code: 0,
+      }
+      return Promise.resolve(data);
     } else {
       showToast(result.data.desc || "操作失败");
       return Promise.reject(result);

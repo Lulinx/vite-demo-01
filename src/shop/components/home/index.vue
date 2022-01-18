@@ -1,35 +1,54 @@
+<!--
+ * @Author: ws
+ * @Date: 2022-01-14 15:13:25
+ * @LastEditTime: 2022-01-18 17:09:18
+ * @LastEditors: ws
+ * @Description: 
+ * @FilePath: \vite-demo-01\src\shop\components\home\index.vue
+-->
 <template>
   <div class="page-shop-home">
-    <van-loading class="loading" v-if="loading" type="spinner" />
-    <div v-else>
-      <van-collapse v-model="activeNames">
-        <van-collapse-item :title="list.title" name="1">
-          {{ list.content }}
-        </van-collapse-item>
-      </van-collapse>
-      <div class="btn">
-        <van-button @click.stop="goToShop()" type="primary">下一步</van-button>
-      </div>
+    <form class="search" action="#">
+      <van-search v-model="value" show-action placeholder="请输入姓名搜索">
+        <template #action>
+          <div @click="onCancel(value)">搜索</div>
+        </template>
+      </van-search>
+    </form>
+    <van-loading class="loading content" v-if="loading" type="spinner" />
+    <div class="content" v-else>
+      <van-empty v-if="!list.length" description="暂无数据" />
+      <van-cell-group v-else v-for="item in list" :key="item.id">
+        <van-cell
+          :title="item.name + item.id"
+          :value="item.years"
+          :label="`注册时间${item.time}`"
+          @click="goToShop(item)"
+        />
+      </van-cell-group>
+    </div>
+    <div class="btn">
+      <van-button type="primary">新增</van-button>
     </div>
   </div>
 </template>
 
 <script>
 import { ref } from "vue";
-import { onMounted, reactive, toRefs } from "@vue/runtime-core";
+import { onBeforeMount, reactive, toRefs } from "@vue/runtime-core";
 import { useRouter } from "vue-router";
-import { Cell, List, Collapse, CollapseItem, Loading, Button } from "vant";
+import { Search, Loading, Button, Cell, CellGroup, Empty } from "vant";
 import { getCurrentInstance } from "vue";
-import { searchDreamDetail } from "@/api/api";
+import { getTestSQL } from "@/api/api";
 export default {
   name: "home",
   components: {
-    [Cell.name]: Cell,
-    [List.name]: List,
-    [Collapse.name]: Collapse,
-    [CollapseItem.name]: CollapseItem,
     [Loading.name]: Loading,
     [Button.name]: Button,
+    [Search.name]: Search,
+    [Cell.name]: Cell,
+    [CellGroup.name]: CellGroup,
+    [Empty.name]: Empty,
   },
   setup(props, ctx) {
     const { proxy } = getCurrentInstance();
@@ -37,35 +56,43 @@ export default {
     let data = reactive({
       list: [],
       loading: true,
-      finished: true,
+      value: "",
     });
-    const router = useRouter();
-    onMounted(() => {
-      searchDreamDetail({
-        area: "武汉",
-        apiKey: "MLi5N8Fa82d8c4c876569aa09698ad23b9610cffaf62972",
-      })
+    onBeforeMount(() => {
+      getDataList();
+    });
+    const getDataList = (params = {}) => {
+      getTestSQL(params)
         .then((res) => {
-          if (res.statusCode == "000000") {
-            data.list = res.result[0];
-            data.loading = false;
-            console.log("list.value====", data.list);
+          if (res.code === 0) {
+            data.list = res.data;
+            console.log("getTestSQL.value====", res);
           }
+          data.loading = false;
         })
         .catch((err) => {
           console.log(err);
-          proxy.$toast("网络异常");
+          data.loading = false;
+          proxy.$toast("请求失败");
         });
-    });
-    const goToShop = () => {
+    };
+    const router = useRouter();
+    const onCancel = (val) => {
+      data.loading = true;
+      getDataList({ name: val });
+    };
+
+    const goToShop = (item) => {
       router.push({
         name: "shop",
+        query: item,
       });
     };
     return {
       goToShop,
       activeNames,
       ...toRefs(data),
+      onCancel,
     };
   },
 };
@@ -76,14 +103,28 @@ export default {
 
 .page-shop-home {
   font-size: @font-size-32;
+  .search {
+    height: 100px;
+    .van-search {
+      height: 100%;
+    }
+  }
   .loading {
     text-align: center;
-    padding-top: 30px;
+  }
+  .content {
+    height: calc(~"100vh - 240px");
+    overflow-y: scroll;
+    .van-empty {
+      height: 100%;
+    }
   }
   .btn {
     padding: 20px 30px;
+    height: 100px;
     .van-button {
       width: 100%;
+      height: 100%;
       border-radius: 50px 50px;
     }
   }

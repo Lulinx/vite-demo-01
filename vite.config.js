@@ -43,7 +43,12 @@ export default defineConfig({
     proxy: {
       "/common": {
         target: "https://api.apishop.net", // 所要代理的目标地址
-        rewrite: (path) => path.replace(/^\/api/, "/common"), // 重写传过来的path路径，
+        rewrite: (path) => path.replace(/^\/common/, "/common"), // 重写传过来的path路径，
+        changeOrigin: true,
+      },
+      "/testApi": {
+        target: "http://127.0.0.1:3000", // 所要代理的目标地址
+        rewrite: (path) => path.replace(/^\/testApi/, ""), // 重写传过来的path路径，
         changeOrigin: true,
       },
     },
