@@ -1,10 +1,10 @@
 <!--
  * @Author: ws
  * @Date: 2022-01-17 08:47:55
- * @LastEditTime: 2022-01-19 15:03:20
+ * @LastEditTime: 2022-01-19 21:04:19
  * @LastEditors: ws
  * @Description: 
- * @FilePath: \vite-demo-01\src\shop\components\shopDetail\index.vue
+ * @FilePath: \vite-demo-pce:\code\vue\vite-demo-01\src\shop\components\shopDetail\index.vue
 -->
 <template>
   <div class="page-shop-detail">
@@ -77,6 +77,9 @@ export default {
     const router = useRouter();
     const onSubmit = () => {
       let params = [];
+      if (!personInfo.person.name) return proxy.$toast("请填写用户姓名");
+      if (!personInfo.person.years) return proxy.$toast("请填输入用户年龄");
+      if (!personInfo.person.time) return proxy.$toast("请选择用户出生日期");
       params.push(personInfo.person);
       personInfo.loading = true;
       console.log("personInfo.person=-====", personInfo.person);

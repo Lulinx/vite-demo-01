@@ -1,10 +1,10 @@
 <!--
  * @Author: ws
  * @Date: 2022-01-14 15:13:25
- * @LastEditTime: 2022-01-19 14:40:02
+ * @LastEditTime: 2022-01-19 21:11:40
  * @LastEditors: ws
  * @Description: 
- * @FilePath: \vite-demo-01\src\shop\components\home\index.vue
+ * @FilePath: \vite-demo-pce:\code\vue\vite-demo-01\src\shop\components\home\index.vue
 -->
 <template>
   <div class="page-shop-home">
@@ -114,6 +114,9 @@ export default {
     .van-search {
       height: 100%;
     }
+  }
+  :deep(.van-search__field) {
+    background-color: transparent;
   }
   .loading {
     text-align: center;
