@@ -1,7 +1,7 @@
 <!--
  * @Author: ws
  * @Date: 2022-01-14 15:13:25
- * @LastEditTime: 2022-01-18 17:09:18
+ * @LastEditTime: 2022-01-19 14:40:02
  * @LastEditors: ws
  * @Description: 
  * @FilePath: \vite-demo-01\src\shop\components\home\index.vue
@@ -28,7 +28,7 @@
       </van-cell-group>
     </div>
     <div class="btn">
-      <van-button type="primary">新增</van-button>
+      <van-button @click="shopDetail" type="primary">新增</van-button>
     </div>
   </div>
 </template>
@@ -88,8 +88,14 @@ export default {
         query: item,
       });
     };
+    const shopDetail = () => {
+      router.push({
+        name: "shopDetail",
+      });
+    };
     return {
       goToShop,
+      shopDetail,
       activeNames,
       ...toRefs(data),
       onCancel,

@@ -46,9 +46,9 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/common/, "/common"), // 重写传过来的path路径，
         changeOrigin: true,
       },
-      "/testApi": {
-        target: "http://127.0.0.1:3000", // 所要代理的目标地址
-        rewrite: (path) => path.replace(/^\/testApi/, ""), // 重写传过来的path路径，
+      "/myApi": {
+        target: "http://127.0.0.1:3000", // 所要代理的目标地址http://keaidian.xyz:6666
+        rewrite: (path) => path.replace(/^\/myApi/, ""), // 重写传过来的path路径，
         changeOrigin: true,
       },
     },

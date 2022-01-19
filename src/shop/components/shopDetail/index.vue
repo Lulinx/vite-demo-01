@@ -1,107 +1,130 @@
+<!--
+ * @Author: ws
+ * @Date: 2022-01-17 08:47:55
+ * @LastEditTime: 2022-01-19 15:03:20
+ * @LastEditors: ws
+ * @Description: 
+ * @FilePath: \vite-demo-01\src\shop\components\shopDetail\index.vue
+-->
 <template>
   <div class="page-shop-detail">
-    <div class="goods">
-      <van-swipe class="goods-swipe" :autoplay="3000">
-        <van-swipe-item v-for="(thumb, index) in thumb" :key="index">
-          <img :src="thumb" />
-        </van-swipe-item>
-      </van-swipe>
-
+    <van-form validate-first @failed="onFailed">
       <van-cell-group>
-        <van-cell>
-          <div class="goods-title">{{ title }}</div>
-          <div class="goods-price">{{ formatPrice(price) }}</div>
-        </van-cell>
-        <van-cell class="goods-express">
-          <van-col span="10">运费：{{ express }}</van-col>
-          <van-col span="14">剩余：{{ remain }}</van-col>
-        </van-cell>
+        <van-field
+          v-model="person.name"
+          name="姓名"
+          label="姓名"
+          placeholder="请填写用户姓名"
+          :rules="[{ required: true, message: '请填写用户姓名' }]"
+        />
+        <van-field
+          v-model="person.years"
+          name="pattern"
+          label="年龄"
+          placeholder="请填输入用户年龄"
+          :rules="[{ pattern, message: '请填输入1-3位纯数字' }]"
+        />
+        <van-field
+          readonly
+          clickable
+          name="datetimePicker"
+          v-model="person.time"
+          label="出生日期"
+          placeholder="选择用户出生日期"
+          @click="showCalendar = true"
+        />
       </van-cell-group>
-
-      <van-cell-group class="goods-cell-group">
-        <van-cell value="进入店铺" icon="shop-o" is-link @click="sorry">
-          <template #title>
-            <span class="van-cell-text">有赞的店</span>
-            <van-tag class="goods-tag" type="danger">官方</van-tag>
-          </template>
-        </van-cell>
-        <van-cell title="线下门店" icon="location-o" is-link @click="sorry" />
-      </van-cell-group>
-
-      <van-cell-group class="goods-cell-group">
-        <van-cell title="查看商品详情" is-link @click="sorry" />
-      </van-cell-group>
-
-      <van-action-bar class="bottom">
-        <van-action-bar-icon icon="chat-o" @click="sorry">
-          客服
-        </van-action-bar-icon>
-        <van-action-bar-icon icon="cart-o" @click="sorry">
-          购物车
-        </van-action-bar-icon>
-        <van-action-bar-button type="warning" @click="sorry">
-          加入购物车
-        </van-action-bar-button>
-        <van-action-bar-button type="danger" @click="sorry">
-          立即购买
-        </van-action-bar-button>
-      </van-action-bar>
+    </van-form>
+    <div style="margin: 16px">
+      <van-button
+        :loading="loading"
+        round
+        block
+        type="primary"
+        @click="onSubmit"
+        >提交</van-button
+      >
     </div>
+    <van-popup v-model:show="showCalendar" position="bottom">
+      <van-datetime-picker
+        type="date"
+        @confirm="onConfirm"
+        @cancel="showCalendar = false"
+        :min-date="minDate"
+        :max-date="maxDate"
+      />
+    </van-popup>
   </div>
 </template>
 
 <script>
-import {
-  Tag,
-  Col,
-  Icon,
-  Cell,
-  CellGroup,
-  Swipe,
-  Toast,
-  SwipeItem,
-  ActionBar,
-  ActionBarIcon,
-  ActionBarButton,
-} from "vant";
-import { reactive, onBeforeMount, toRefs } from "vue";
+import { CellGroup, DatetimePicker, Field, Button, Form, Popup } from "vant";
+import { reactive, onBeforeMount, toRefs, ref, getCurrentInstance } from "vue";
+import { addPersonInfo } from "@/api/api";
+import { dateFormat } from "@/utils/extend";
+import { useRouter } from "vue-router";
 export default {
   components: {
-    [Tag.name]: Tag,
-    [Col.name]: Col,
-    [Icon.name]: Icon,
-    [Cell.name]: Cell,
+    [DatetimePicker.name]: DatetimePicker,
+    [Field.name]: Field,
     [CellGroup.name]: CellGroup,
-    [Swipe.name]: Swipe,
-    [SwipeItem.name]: SwipeItem,
-    [ActionBar.name]: ActionBar,
-    [ActionBarIcon.name]: ActionBarIcon,
-    [ActionBarButton.name]: ActionBarButton,
+    [Button.name]: Button,
+    [Form.name]: Form,
+    [Popup.name]: Popup,
   },
   setup(props) {
-    const goods = reactive({
-      title: "美国伽力果（约680g/3个）",
-      price: 2680,
-      express: "免运费",
-      remain: 19,
-      thumb: [
-        "https://img.yzcdn.cn/public_files/2017/10/24/e5a5a02309a41f9f5def56684808d9ae.jpeg",
-        "https://img.yzcdn.cn/public_files/2017/10/24/1791ba14088f9c2be8c610d0a6cc0f93.jpeg",
-      ],
-    });
-    onBeforeMount(() => {
-      console.log("shopDetail...", goods);
-    });
-    const formatPrice = () => {
-      return "¥" + (goods.price / 100).toFixed(2);
+    const { proxy } = getCurrentInstance();
+    const router = useRouter();
+    const onSubmit = () => {
+      let params = [];
+      params.push(personInfo.person);
+      personInfo.loading = true;
+      console.log("personInfo.person=-====", personInfo.person);
+      addPersonData({ personInfo: params });
     };
-    const sorry = () => {
-      Toast("暂无后续逻辑~");
+    const addPersonData = (params) => {
+      addPersonInfo(params)
+        .then((res) => {
+          personInfo.loading = false;
+          if (res.code === 0) {
+            proxy.$toast("success", "添加成功");
+            setTimeout(() => {
+              router.go(-1);
+            }, 700);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          personInfo.loading = false;
+          proxy.$toast("请求失败");
+        });
+    };
+    const personInfo = reactive({
+      person: {
+        name: "",
+        years: "",
+        time: "",
+      },
+      showCalendar: false, //展示日历
+      pattern: /^([1-9][0-9]*)$/, //正则，数字
+      loading: false,
+    });
+    const onFailed = (errorInfo) => {
+      console.log("failed", errorInfo);
+    };
+    const onConfirm = (date) => {
+      date = new Date(date).getTime();
+      let dateTime = dateFormat(date, "YYYY-MM-DD HH:mm:ss");
+      personInfo.person.time = dateTime;
+      personInfo.showCalendar = false;
     };
     return {
-      ...toRefs(goods),
-      formatPrice,
-      sorry,
+      onSubmit,
+      onFailed,
+      onConfirm,
+      ...toRefs(personInfo),
+      minDate: new Date(1970, 0, 1),
+      maxDate: new Date(),
     };
   },
 };
@@ -109,44 +132,5 @@ export default {
 
 <style lang="less" scoped>
 .page-shop-detail {
-  .goods {
-    padding-bottom: 100px;
-
-    &-swipe {
-      img {
-        width: 100%;
-        display: block;
-      }
-    }
-
-    &-title {
-      font-size: 16px;
-    }
-
-    &-price {
-      color: #f44;
-    }
-
-    &-express {
-      color: #999;
-      font-size: 12px;
-      padding: 5px 15px;
-    }
-
-    &-cell-group {
-      margin: 15px 0;
-
-      .van-cell__value {
-        color: #999;
-      }
-    }
-
-    &-tag {
-      margin-left: 5px;
-    }
-    .bottom {
-      height: 100px;
-    }
-  }
 }
 </style>

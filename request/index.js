@@ -1,7 +1,7 @@
 /*
  * @Author: ws
  * @Date: 2022-01-14 08:52:47
- * @LastEditTime: 2022-01-18 15:40:00
+ * @LastEditTime: 2022-01-19 16:27:38
  * @LastEditors: ws
  * @Description: 
  * @FilePath: \vite-demo-01\request\index.js
@@ -11,7 +11,7 @@ import axios from 'axios';
 import { showToast } from "@/utils/extend.js";
 
 // 默认请求连接
-// axios.defaults.baseURL = "https://api.apishop.net";
+axios.defaults.baseURL = "/myApi";
 // 超时时间（ms）
 axios.defaults.timeout = 2000 * 1000;
 // axios请求开启cookie，支持跨域请求携带cookie
