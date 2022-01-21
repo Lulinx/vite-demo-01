@@ -1,7 +1,7 @@
 <!--
  * @Author: ws
  * @Date: 2022-01-17 08:47:55
- * @LastEditTime: 2022-01-21 17:55:32
+ * @LastEditTime: 2022-01-21 23:35:26
  * @LastEditors: ws
  * @Description: 
  * @FilePath: \vite-demo-01\src\shop\components\shopDetail\index.vue
@@ -47,7 +47,7 @@
               v-model="person[index].time"
               label="出生日期"
               placeholder="选择用户出生日期"
-              @click="showCalendar = true"
+              @click="whichCalendar(index)"
             />
           </van-cell-group>
         </van-form>
@@ -130,7 +130,12 @@ export default {
       pattern: /^([1-9][0-9]*)$/, //正则，数字
       loading: false,
       activeNames: [0],
+      calendarIndex: 0,
     });
+    const whichCalendar = (index) => {
+      personInfo.showCalendar = true;
+      personInfo.calendarIndex = index;
+    };
     const onSubmit = () => {
       console.log("personInfo.person=-====", personInfo.person);
       for (let i = 0; i < personInfo.person.length; i++) {
@@ -189,7 +194,7 @@ export default {
     const onConfirm = (date) => {
       date = new Date(date).getTime();
       let dateTime = dateFormat(date, "YYYY-MM-DD HH:mm:ss");
-      personInfo.person[0].time = dateTime;
+      personInfo.person[personInfo.calendarIndex].time = dateTime;
       personInfo.showCalendar = false;
     };
     return {
@@ -198,6 +203,7 @@ export default {
       onConfirm,
       addPerson,
       deleteItem,
+      whichCalendar,
       ...toRefs(personInfo),
       minDate: new Date(1970, 0, 1),
       maxDate: new Date(),
