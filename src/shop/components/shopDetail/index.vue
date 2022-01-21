@@ -1,7 +1,7 @@
 <!--
  * @Author: ws
  * @Date: 2022-01-17 08:47:55
- * @LastEditTime: 2022-01-21 17:37:31
+ * @LastEditTime: 2022-01-21 17:55:32
  * @LastEditors: ws
  * @Description: 
  * @FilePath: \vite-demo-01\src\shop\components\shopDetail\index.vue
@@ -129,7 +129,7 @@ export default {
       showCalendar: false, //展示日历
       pattern: /^([1-9][0-9]*)$/, //正则，数字
       loading: false,
-      activeNames: ["0"],
+      activeNames: [0],
     });
     const onSubmit = () => {
       console.log("personInfo.person=-====", personInfo.person);
