@@ -1,7 +1,7 @@
 <!--
  * @Author: ws
  * @Date: 2022-01-17 08:47:55
- * @LastEditTime: 2022-01-20 09:48:18
+ * @LastEditTime: 2022-01-21 17:37:31
  * @LastEditors: ws
  * @Description: 
  * @FilePath: \vite-demo-01\src\shop\components\shopDetail\index.vue
@@ -9,12 +9,21 @@
 <template>
   <div class="page-shop-detail">
     <van-collapse
-      v-for="(item, index) in personListLength"
+      v-for="(item, index) in person"
       class="info-title"
       v-model="activeNames"
       :key="item"
     >
-      <van-collapse-item :ref="title" :title="`用户信息${item}`" :name="item">
+      <van-collapse-item :name="index">
+        <template #title>
+          <div>
+            <van-icon
+              v-if="person.length > 1"
+              name="clear"
+              @click.stop="deleteItem(index)"
+            />{{ `用户信息${index + 1}` }}
+          </div>
+        </template>
         <van-form validate-first @failed="onFailed">
           <van-cell-group>
             <van-field
@@ -80,8 +89,16 @@ import {
   Popup,
   Collapse,
   CollapseItem,
+  Dialog,
 } from "vant";
-import { reactive, onBeforeMount, toRefs, ref, getCurrentInstance } from "vue";
+import {
+  reactive,
+  onBeforeMount,
+  toRefs,
+  ref,
+  getCurrentInstance,
+  nextTick,
+} from "vue";
 import { addPersonInfo } from "@/api/api";
 import { dateFormat } from "@/utils/extend";
 import { useRouter } from "vue-router";
@@ -96,11 +113,11 @@ export default {
     [Icon.name]: Icon,
     [Collapse.name]: Collapse,
     [CollapseItem.name]: CollapseItem,
+    [Dialog.Component.name]: Dialog.Component,
   },
   setup(props) {
     const { proxy } = getCurrentInstance();
     const router = useRouter();
-    const title = ref(null);
     const personInfo = reactive({
       person: [
         {
@@ -109,28 +126,25 @@ export default {
           time: "",
         },
       ],
-      personListLength: 1, //人员信息个数
       showCalendar: false, //展示日历
       pattern: /^([1-9][0-9]*)$/, //正则，数字
       loading: false,
-      activeNames: ["1"],
+      activeNames: ["0"],
     });
     const onSubmit = () => {
-      console.log(title.name);
-      return;
-      personInfo.person.forEach((res, idx) => {
-        if (!res.name) {
-          return proxy.$toast(`请填写用户${idx + 1}的姓名`);
-        }
-        if (!res.years) {
-          return proxy.$toast(`请填输入用户${idx + 1}的年龄`);
-        }
-        if (!res.time) {
-          return proxy.$toast(`请选择用户${idx + 1}的出生日期`);
-        }
-      });
-      personInfo.loading = true;
       console.log("personInfo.person=-====", personInfo.person);
+      for (let i = 0; i < personInfo.person.length; i++) {
+        if (!personInfo.person[i].name) {
+          return proxy.$toast(`请填写用户${i + 1}的姓名`);
+        }
+        if (!personInfo.person[i].years) {
+          return proxy.$toast(`请填输入用户${i + 1}的年龄`);
+        }
+        if (!personInfo.person[i].time) {
+          return proxy.$toast(`请选择用户${i + 1}的出生日期`);
+        }
+      }
+      personInfo.loading = true;
       addPersonData({ personInfo: personInfo.person });
     };
     const addPersonData = (params) => {
@@ -151,7 +165,6 @@ export default {
         });
     };
     const addPerson = () => {
-      personInfo.personListLength++;
       personInfo.person.push({
         name: "",
         years: "",
@@ -160,6 +173,18 @@ export default {
     };
     const onFailed = (errorInfo) => {
       console.log("failed", errorInfo);
+    };
+    const deleteItem = (index) => {
+      Dialog.confirm({
+        message: "确定要删除此条信息吗?",
+      })
+        .then(() => {
+          personInfo.person.splice(index, 1);
+          proxy.$toast("删除成功");
+        })
+        .catch(() => {
+          Dialog.close();
+        });
     };
     const onConfirm = (date) => {
       date = new Date(date).getTime();
@@ -172,7 +197,7 @@ export default {
       onFailed,
       onConfirm,
       addPerson,
-      title,
+      deleteItem,
       ...toRefs(personInfo),
       minDate: new Date(1970, 0, 1),
       maxDate: new Date(),
@@ -186,9 +211,21 @@ export default {
   .info-title {
     font-size: 34px;
     font-weight: bolder;
-    padding-left: 20px;
     .van-hairline--top-bottom::after {
       display: none;
+    }
+    :deep(.van-cell__title) {
+      div {
+        display: flex;
+        justify-content: left;
+        align-items: center;
+      }
+    }
+    :deep(.van-icon) {
+      margin-right: 20px;
+      font-size: 38px;
+      color: rgb(182, 22, 22);
+      line-height: inherit;
     }
   }
 
