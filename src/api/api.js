@@ -1,7 +1,7 @@
 /*
  * @Author: ws
  * @Date: 2022-01-14 08:52:47
- * @LastEditTime: 2022-01-19 16:24:35
+ * @LastEditTime: 2022-01-22 14:34:03
  * @LastEditors: ws
  * @Description: 
  * @FilePath: \vite-demo-01\src\api\api.js
@@ -52,4 +52,11 @@ export const addPersonInfo = (data = {}, callback = "") =>
       data,
       callback
     );
-
+export const changePersonInfo = (data = {}, callback = "") =>
+  Mock
+    ? mockData("changePersonInfo")
+    : request.post(
+      `/testApi/changePersonInfo`,
+      data,
+      callback
+    );

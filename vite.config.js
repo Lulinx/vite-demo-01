@@ -47,7 +47,7 @@ export default defineConfig({
         changeOrigin: true,
       },
       "/myApi": {
-        target: "http://keaidian.xyz:3399", // 所要代理的目标地址http://localhost:3000
+        target: "http://localhost:3000", // 所要代理的目标地址http://keaidian.xyz:3399
         rewrite: (path) => path.replace(/^\/myApi/, ""), // 重写传过来的path路径，
         changeOrigin: true,
       },
